@@ -5,13 +5,13 @@
   - You will always get a ARMv7 binary under this configuration
   - Use ```gcc-arm-linux-gnueabi``` and ```g++-arm-linux-gnueabi``` instead
   - You can check [ref1](https://github.com/japaric/rust-cross/issues/42#issue-338211341) and [ref2](https://github.com/rust-lang/rust/issues/45284#issuecomment-468037624) for more information
+  
 - If you use a native compiler, you may get a **hard-floating point** binary (e.g. left side of below image)
   - ```gcc-arm-linux-gnueabihf``` and  ```g++-arm-linux-gnueabihf``` are functional for ARMv6 as expected
 
-![alt text](https://drive.google.com/uc?export=view&id=1bHWDBpgexPCbWIRpzYPkt5wrvNPmsu7N)
+![1N0j6PjdGxp3eTas-K9yeXMmzsujTRoPh](https://drive.google.com/uc?export=view&id=1N0j6PjdGxp3eTas-K9yeXMmzsujTRoPh)
 
-![alt text](https://drive.google.com/uc?export=view&id=1N0j6PjdGxp3eTas-K9yeXMmzsujTRoPh)
-
+![1bHWDBpgexPCbWIRpzYPkt5wrvNPmsu7N](https://drive.google.com/uc?export=view&id=1bHWDBpgexPCbWIRpzYPkt5wrvNPmsu7N)
 
 ### TENSORFLOW_TARGET 設 rpi, 只會走 armv7l (詳情可以看 [build_pip_package.sh](https://github.com/tensorflow/tensorflow/blob/f4eda958b3ecccf04b431c9a6c7595e4701ef125/tensorflow/lite/tools/pip_package/build_pip_package.sh#L41) 裡面的判斷)
 開始進行以下修改:
