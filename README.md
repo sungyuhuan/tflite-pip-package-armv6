@@ -1,13 +1,24 @@
 # tflite-pip-package-armv6
 ## Modifications to make tensorflow lite standalone pip package script work for ARMv6
+- This is a **cross compiler** solution which can only generates **soft-floating point** binary for ARMv6 (-mfloat-abi=softfp)
+  - ```gcc-arm-linux-gnueabihf``` and  ```g++-arm-linux-gnueabihf``` are **NOT** functional for ARMv6 (-march=armv6)
+  - You will always get a ARMv7 binary under this configuration
+  - Use ```gcc-arm-linux-gnueabi``` and ```g++-arm-linux-gnueabi``` instead
+  - You can check [ref1](https://github.com/japaric/rust-cross/issues/42#issue-338211341) and [ref2](https://github.com/rust-lang/rust/issues/45284#issuecomment-468037624) for more information
+- If you use a native compiler, you may get a **hard-floating point** binary (e.g. left side of below image)
+  - ```gcc-arm-linux-gnueabihf``` and  ```g++-arm-linux-gnueabihf``` are functional for ARMv6 as expected
+
+![alt text](https://drive.google.com/uc?export=view&id=1bHWDBpgexPCbWIRpzYPkt5wrvNPmsu7N)
+![alt text](https://drive.google.com/uc?export=view&id=1N0j6PjdGxp3eTas-K9yeXMmzsujTRoPh)
+
+
+### TENSORFLOW_TARGET 設 rpi, 只會走 armv7l (詳情可以看 [build_pip_package.sh](https://github.com/tensorflow/tensorflow/blob/f4eda958b3ecccf04b431c9a6c7595e4701ef125/tensorflow/lite/tools/pip_package/build_pip_package.sh#L41) 裡面的判斷)
+開始進行以下修改:
 
 ```
 cd tensorflow/lite/tools/pip_package
 make BASE_IMAGE=debian:stretch PYTHON=python3 TENSORFLOW_TARGET=rpi TENSORFLOW_TARGET_ARCH=armv6 docker-build
 ```
-
-TENSORFLOW_TARGET 設 rpi, 只會走 armv7l (詳情可以看 build_pip_package.sh 裡面的判斷)
-開始進行以下修改:
 
 ### Fix-1 fatal error: arm-linux-gnueabi/python3.5m/pyconfig.h: No such file or directory
 ```sudo nano Dockerfile```
@@ -87,7 +98,22 @@ case "${TENSORFLOW_TARGET}" in
 …
 ifeq ($(TARGET_ARCH), armv6)
     TARGET_TOOLCHAIN_PREFIX := arm-linux-gnueabi-
-```    
+```
+
+you can also use instead of ```-march=armv6``` :
+```
+  ifeq ($(TARGET_ARCH), armv6)
+    TARGET_TOOLCHAIN_PREFIX := arm-linux-gnueabi-
+    CXXFLAGS += \
+      -mfpu=vfp \
+      -mcpu=arm1176jzf-s \
+      -mtune=arm1176jzf-s \
+      -mfloat-abi=softfp \
+      -D_GLIBCXX_USE_CXX11_ABI=0 \
+      -funsafe-math-optimizations \
+      -ftree-vectorize \
+      -fPIC
+```
 
 ### Fix-9 讓 interpreter wrapper 也 build 成 armv6
 ```sudo nano setup.py```
