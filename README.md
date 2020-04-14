@@ -1,6 +1,6 @@
 # tflite-pip-package-armv6
 ## Modifications to make tensorflow lite standalone pip package script work for ARMv6
-- This is a **cross compiler** solution which can only generates **soft-floating point** binary for ARMv6 (-mfloat-abi=softfp)
+- [This](https://github.com/tensorflow/tensorflow/blob/f4eda958b3ecccf04b431c9a6c7595e4701ef125/tensorflow/lite/tools/pip_package/build_pip_package.sh#L41) provides a **cross compiler** solution which can only generates **soft-floating point** binary for ARMv6 (-mfloat-abi=softfp)
   - ```gcc-arm-linux-gnueabihf``` and  ```g++-arm-linux-gnueabihf``` are **NOT** functional for ARMv6 (-march=armv6)
   - You will always get a ARMv7 binary under this configuration
   - Use ```gcc-arm-linux-gnueabi``` and ```g++-arm-linux-gnueabi``` instead
@@ -9,6 +9,7 @@
   - ```gcc-arm-linux-gnueabihf``` and  ```g++-arm-linux-gnueabihf``` are functional for ARMv6 as expected
 
 ![alt text](https://drive.google.com/uc?export=view&id=1bHWDBpgexPCbWIRpzYPkt5wrvNPmsu7N)
+
 ![alt text](https://drive.google.com/uc?export=view&id=1N0j6PjdGxp3eTas-K9yeXMmzsujTRoPh)
 
 
