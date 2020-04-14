@@ -6,7 +6,7 @@
   - Use ```gcc-arm-linux-gnueabi``` and ```g++-arm-linux-gnueabi``` instead
   - You can check [ref1](https://github.com/japaric/rust-cross/issues/42#issue-338211341) and [ref2](https://github.com/rust-lang/rust/issues/45284#issuecomment-468037624) for more information
   
-- If you use a native compiler, you may get a **hard-floating point** binary (e.g. left side of below image)
+- If you use a **native compiler**, you may get a **hard-floating point** binary (e.g. left side of below image)
   - ```gcc-arm-linux-gnueabihf``` and  ```g++-arm-linux-gnueabihf``` are functional for ARMv6 as expected
 
 ![1N0j6PjdGxp3eTas-K9yeXMmzsujTRoPh](https://drive.google.com/uc?export=view&id=1N0j6PjdGxp3eTas-K9yeXMmzsujTRoPh)
